@@ -33,7 +33,7 @@ public final class CollectAllelicCountsIntegrationTest extends CommandLineProgra
         //counts from IGV with minMQ = 30 and minBQ = 20
         final AllelicCountCollection normalCountsExpected = new AllelicCountCollection();
         normalCountsExpected.add(new AllelicCount(new SimpleInterval("1", 10736, 10736), 0, 0));
-        normalCountsExpected.add(new AllelicCount(new SimpleInterval("1", 11522, 11522), 7, 4));
+        normalCountsExpected.add(new AllelicCount(new SimpleInterval("chr1", 11522, 11522), 7, 4));
         normalCountsExpected.add(new AllelicCount(new SimpleInterval("1", 12098, 12098), 8, 6));
         normalCountsExpected.add(new AllelicCount(new SimpleInterval("1", 12444, 12444), 0, 18));
         normalCountsExpected.add(new AllelicCount(new SimpleInterval("1", 13059, 13059), 0, 8));
@@ -75,6 +75,7 @@ public final class CollectAllelicCountsIntegrationTest extends CommandLineProgra
         };
         runCommandLine(arguments);
         final AllelicCountCollection countsResult = new AllelicCountCollection(outputFile);
+        Assert.assertEquals(countsExpected.getCounts().size(), countsResult.getCounts().size());
         Assert.assertEquals(countsExpected, countsResult);
     }
 

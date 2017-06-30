@@ -2,6 +2,7 @@ package org.broadinstitute.hellbender.tools.copynumber;
 
 import htsjdk.samtools.ValidationStringency;
 import htsjdk.samtools.util.IntervalList;
+import org.apache.avro.generic.GenericData;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.broadinstitute.barclay.argparser.Argument;
@@ -20,6 +21,7 @@ import org.broadinstitute.hellbender.engine.LocusWalker;
 import org.broadinstitute.hellbender.engine.ReferenceContext;
 import org.broadinstitute.hellbender.engine.filters.MappingQualityReadFilter;
 import org.broadinstitute.hellbender.engine.filters.ReadFilter;
+import org.broadinstitute.hellbender.engine.filters.ReadFilterLibrary;
 import org.broadinstitute.hellbender.tools.copynumber.allelic.alleliccount.AllelicCountCollection;
 import org.broadinstitute.hellbender.tools.copynumber.allelic.alleliccount.AllelicCountCollector;
 import org.broadinstitute.hellbender.utils.Nucleotide;
@@ -29,6 +31,7 @@ import org.broadinstitute.hellbender.utils.param.ParamUtils;
 import org.broadinstitute.hellbender.utils.read.ReadConstants;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,6 +132,9 @@ public final class CollectAllelicCounts extends LocusWalker {
     private static final int DEFAULT_MINIMUM_MAPPING_QUALITY = 30;
 
     private AllelicCountCollector allelicCountCollector = new AllelicCountCollector();
+
+    @Override
+    public boolean emitEmptyLoci() {return true;}
 
     @Override
     public void onTraversalStart() {
